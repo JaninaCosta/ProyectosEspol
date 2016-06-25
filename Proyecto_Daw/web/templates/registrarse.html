@@ -1,0 +1,61 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+{% block content %}
+        {% if form.errors %}
+            <p>{{ form.errors }}</p>
+        {% endif %}
+<html lang="es">
+    <head>
+        <meta charset="utf-8" />
+        <title>Registarse</title>
+        <!--hoja externa para menu.css-->
+        <link rel="stylesheet" href="{% static 'CSS/registrarse.css' %}">
+        <!--hoja externa para javsript-->
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/sweetalert2.css' %}">
+        </head>
+
+    <body>
+       <div id="form_regi">
+            <header>
+                <h1>Registrarse</h1>
+            </header>
+            <!--linea horizaontal-->
+            <hr style=" width:85% ;color: #fff"/>
+
+            <!--section para el fomulario-->
+            <section id="form">
+                  <form action='registrar' method='POST' > {% csrf_token %}
+
+                        <strong>Info!</strong> Ingrese su user ESPOL, de enter y espere unos segundos por favor!.
+                    
+
+                        <input type="text" id="txtusername" name="username"  class="txtvalidar" placeholder="Username" required="" onkeypress="return soloLetras(event)" onblur="limpia()" onKeyUp="return limitar(event,this.value,10)" onKeyDown="return limitar(event,this.value,10)">
+                        
+                        <input type="text" id="first_name" name="first_name" size="3"  class="txtvalidar" placeholder="Nombre" required="" onkeypress="return soloLetras(event)" onblur="limpia()" onKeyUp="return limitar(event,this.value,10)" onKeyDown="return limitar(event,this.value,10)">
+
+                        <input type="text" id="last_name" name="last_name" class="txtvalidar" placeholder="Apellido" required="" onkeypress="return soloLetras(event)" onblur="limpia()" onKeyUp="return limitar(event,this.value,10)" onKeyDown="return limitar(event,this.value,10)">
+
+                        <input type="password" name="password" id="txtPass"  class="password" placeholder="Password" required=""  > </br > </br >
+                        <!--{{ form.password }}-->
+
+                        <label id="label1" for="label" > Tiene Carro </label> </br >
+
+                        <input class="radios" id="radioPosi" type="radio" name="is_carro" value="si" onclick="plaquita.disabled = false">Si
+
+                        <input class="radios" id="radioNega" type="radio" name="is_carro" value="no" onclick="plaquita.disabled = true" checked>No
+
+                        <input id="plaquita" type="text"  placeholder="Ejemplo: GSG2123" class="showpassword" name="placa"  disabled="disabled" pattern="[a-zA-Z]{3}\d{4}" required="">
+
+                        <button type="submit" value="login" id="btnRegistrar"  href= "{% url 'guardarUsuario' %}"> Registrar</button>
+                   </form>
+               {% endblock %}
+            </section><!--fin de section-->
+       </div>
+    </body>
+
+    <script src="{% static 'js/sweetalert2.min.js' %}"></script>
+    <script src="{% static 'js/registrarse.js' %}"></script>
+
+</html>

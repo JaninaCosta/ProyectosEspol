@@ -1,0 +1,82 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+
+{% block content %}
+    {% if form.errors %}
+        <p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <title>Inicio de Sesión</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'CSS/inicio.css' %}" />
+	<script type="text/javascript" src="{% static 'js/inicio.js' %}"></script>
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '1620624664887061',
+          xfbml      : true,
+          version    : 'v2.4'
+        });
+      };
+
+      (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "//connect.facebook.net/en_US/sdk.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+
+
+	{% ifequal error2 'true' %}
+    <script type="text/javascript">
+    	window.alert("Usuario y contrasenas invalidas" + error);
+    </script>
+
+  	{% endifequal %}
+
+	<!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- INICIO DE BOOSTRAP -->
+    <!-- Latest compiled and minified CSS -->
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <!-- FIN DE BOOSTRAP -->
+
+    </head>
+    <body>
+    <div class="container">
+	    <section id="content">
+            <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
+		    <!--<form action="login" method="post">-->
+            {% csrf_token %}
+			    <h1>Bienvenido</h1>
+
+                <div>
+				    <input type="text" name="username" placeholder="Username" required="" id="username" />
+			    </div>
+
+                <div>
+				    <input type="password" name="password" placeholder="Password" required="" id="password" />
+			    </div>
+
+                <div>
+                    <input type="submit" value="login" id="button_login" name="login" href="{% url 'login' %}"/>
+                    <input type="hidden" name="next" value="{{ next }}"/>
+
+                    <a id="registrate" href="{% url 'regis' %}" >Regístrate!</a><b >¿No tienes una cuenta?</b>
+				    <!--<a href="#">Lost your password?</a>-->
+         	    </div>
+		    </form><!-- form -->
+            {% endblock %}
+	    </section><!-- content -->
+    </div><!-- container -->
+    </body>
+</html>
